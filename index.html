@@ -289,15 +289,34 @@ THEMES.forEach((t,i)=>{
   $("sw").appendChild(s);
 });
 
+/* stiker vektor (digambar langsung, tidak bergantung font emoji) */
+function deco(g,t,cx,cy,s,r){
+  g.save();g.translate(cx,cy);g.rotate(r);g.scale(s/22,s/22);
+  g.lineJoin="round";g.lineWidth=3.5;g.strokeStyle="#fff";
+  if(t==="h"){
+    g.fillStyle="#e8456b";g.beginPath();g.moveTo(0,10);g.bezierCurveTo(-22,-4,-10,-20,0,-6);g.bezierCurveTo(10,-20,22,-4,0,10);g.closePath();g.stroke();g.fill();
+  }else if(t==="s"){
+    g.fillStyle="#ffd36b";g.beginPath();
+    for(let i=0;i<8;i++){const a=i*Math.PI/4-Math.PI/2,d=i%2?4.5:15;g.lineTo(Math.cos(a)*d,Math.sin(a)*d)}
+    g.closePath();g.stroke();g.fill();
+  }else{
+    g.fillStyle="#ff8fb1";
+    for(let i=0;i<5;i++){g.save();g.rotate(i*2*Math.PI/5);g.beginPath();g.ellipse(0,-9,6.5,9.5,0,0,7);g.stroke();g.fill();g.restore()}
+    g.fillStyle="#ffd36b";g.beginPath();g.arc(0,0,4.6,0,7);g.fill();
+  }
+  g.restore();
+}
 const load=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
 $("dl").onclick=async()=>{
   play("jepret");
   await document.fonts.ready;
-  const W=600,pad=40,pw=W-pad*2,ph=390,gap=28,top=40,foot=150;
+  const W=600,pad=40,pw=W-pad*2,ph=390,gap=28,top=40,foot=210;
   const H=top+srcs.length*(ph+gap)-gap+foot;
   const c=document.createElement("canvas");c.width=W;c.height=H;
   const x=c.getContext("2d");
   x.fillStyle=theme.p;x.fillRect(0,0,W,H);
+  x.save();x.strokeStyle=theme.i;x.globalAlpha=.35;x.lineWidth=2;x.setLineDash([10,8]);x.strokeRect(12,12,W-24,H-24);x.restore();
+  x.fillStyle=theme.i;x.textAlign="center";x.font="700 15px 'Courier Prime',monospace";x.fillText("PHOTOBOOTH",W/2,29);
   const imgs=await Promise.all(srcs.map(load));
   imgs.forEach((im,i)=>{
     const y=top+i*(ph+gap);
@@ -308,14 +327,14 @@ $("dl").onclick=async()=>{
       x.drawImage(im,pad+(pw-w)/2,y+(ph-h)/2,w,h);x.restore();
     }
     x.lineWidth=6;x.strokeStyle=theme.i;x.strokeRect(pad,y,pw,ph);
-    x.font="34px serif";x.fillStyle=theme.c;x.textAlign="right";
-    x.fillText("❤",pad+pw-12,y+42);
+    deco(x,"h",pad+pw-26,y+28,26,.2);
   });
-  const fy=H-foot+54;
+  const fy=H-foot+74;
   x.textAlign="center";
   x.fillStyle=theme.c;x.font="64px 'Pinyon Script',cursive";x.fillText("love you",W/2,fy);
   x.fillStyle=theme.i;x.font="700 24px 'Courier Prime',monospace";x.fillText(TGL,W/2,fy+46);
-  x.font="34px serif";x.fillText("🌹 ✨ 💗",W/2,fy+92);
+  deco(x,"h",W/2-70,fy+90,34,-.2);deco(x,"f",W/2,fy+90,40,0);deco(x,"s",W/2+70,fy+90,34,0);
+  [["f",30,top+22,58,-.3],["s",W-30,H*.28,42,0],["h",W-34,H*.5,46,.25],["f",28,H*.72,54,.2],["s",30,H*.46,34,0],["h",32,H*.27,34,-.2],["h",W-38,H-48,54,-.25],["s",W-34,top+30,30,0]].forEach(a=>deco(x,a[0],a[1],a[2],a[3],a[4]));
   c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="photobooth.png";a.click()},"image/png");
 };
 </script>
