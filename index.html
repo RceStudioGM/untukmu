@@ -156,7 +156,7 @@ input[type=file]{display:none}
 /* ====== UBAH BAGIAN INI SAJA ====== */
 const UNTUK = "Untuk kamu, sayangku";
 const DARI = "— dari aku, yang selalu sayang kamu";
-const TANGGAL = "07 · 11 · 2026";
+const TANGGAL = ""; /* kosong = otomatis tanggal hari ini; atau isi manual, misal "14 · 02 · 2027" */
 const ISI = [
   "Awalnya cuma iseng ngobrol, sekarang malah jadi rutinitas yang aku tunggu. Baru beberapa hari, tapi kok rasanya udah lama aku kenal kamu.",
   "Hari-hari aku jadi lebih ramai, lebih hangat, dan lebih berwarna, cuma gara-gara ada kamu. Aku tunggu kabar kamu tiap pagi, aku tunggu balasan kamu tiap malam.",
@@ -170,6 +170,7 @@ const SOUND = {musik:"sound/musik.mp3", buka:"sound/buka.mp3", klik:"sound/klik.
 /* ================================== */
 
 const $ = id => document.getElementById(id);
+const TGL = TANGGAL || (d=>[d.getDate(),d.getMonth()+1,d.getFullYear()].map(n=>String(n).padStart(2,"0")).join(" · "))(new Date());
 
 /* meja kayu penuh buku (acak tetap, tidak berubah tiap reload) */
 (()=>{let s=7;const r=()=>(s=s*16807%2147483647)/2147483647;
@@ -244,8 +245,8 @@ $("envelope").addEventListener("click",openLetter);
 $("envelope").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLetter()}});
 
 $("recipient").textContent=UNTUK;
-$("date").textContent=TANGGAL;
-$("capTgl").textContent=TANGGAL;
+$("date").textContent=TGL;
+$("capTgl").textContent=TGL;
 $("signature").textContent=DARI;
 ISI.forEach(t=>{const p=document.createElement("p");p.textContent=t;$("letterBody").appendChild(p)});
 
@@ -313,7 +314,7 @@ $("dl").onclick=async()=>{
   const fy=H-foot+54;
   x.textAlign="center";
   x.fillStyle=theme.c;x.font="64px 'Pinyon Script',cursive";x.fillText("love you",W/2,fy);
-  x.fillStyle=theme.i;x.font="700 24px 'Courier Prime',monospace";x.fillText(TANGGAL,W/2,fy+46);
+  x.fillStyle=theme.i;x.font="700 24px 'Courier Prime',monospace";x.fillText(TGL,W/2,fy+46);
   x.font="34px serif";x.fillText("🌹 ✨ 💗",W/2,fy+92);
   c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="photobooth.png";a.click()},"image/png");
 };
