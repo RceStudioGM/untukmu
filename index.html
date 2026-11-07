@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#38232a;--wine:#672b3e}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden;overscroll-behavior-x:none}
 *{box-sizing:border-box}body{margin:0;min-height:100svh;color:var(--ink);font-family:Georgia,"Times New Roman",serif;background:#2a1409;overflow:hidden}
 button{font:inherit}
 
@@ -53,7 +53,7 @@ body:not(.siap) .envelope{filter:drop-shadow(0 0 0 #0000)}
 @keyframes breathe{50%{transform:scale(1.06)}}
 
 /* ===== SURAT ===== */
-.letter{position:fixed;inset:0;z-index:2;overflow-y:auto;display:none}
+.letter{position:fixed;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;display:none}
 .letter.show{display:block;animation:rise 1.1s cubic-bezier(.2,.7,.2,1) both}
 @keyframes rise{from{opacity:0;transform:scale(1.14)}to{opacity:1;transform:none}}
 .letter-wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 16px 50px}
@@ -99,7 +99,7 @@ linear-gradient(135deg,#fdf5e1,#f2e2bd)}
 .snd{position:fixed;top:12px;right:12px;z-index:40;width:42px;height:42px;border-radius:50%;border:0;background:#0007;color:#fff;font-size:20px;cursor:pointer;display:none}.snd.on{display:block}
 
 /* ===== PHOTOBOOTH ===== */
-#booth{--rose:#c9566b;--blush:#fbe3e6;--wine:#4a1424;--gold:#e0b25a;position:fixed;inset:0;z-index:30;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:0 0 40px;font-family:'Cormorant Garamond',Georgia,serif;color:var(--wine);background:var(--wine) repeating-linear-gradient(90deg,#5c1a2e 0 28px,#4a1424 28px 56px);opacity:0;pointer-events:none;transition:opacity .8s}
+#booth{--rose:#c9566b;--blush:#fbe3e6;--wine:#4a1424;--gold:#e0b25a;position:fixed;inset:0;z-index:30;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;display:flex;flex-direction:column;align-items:center;padding:0 0 40px;font-family:'Cormorant Garamond',Georgia,serif;color:var(--wine);background:var(--wine) repeating-linear-gradient(90deg,#5c1a2e 0 28px,#4a1424 28px 56px);opacity:0;pointer-events:none;transition:opacity .8s}
 #booth.show{opacity:1;pointer-events:auto}
 .sign{margin:30px 0 18px;padding:12px 34px;background:#2b0b15;border:4px solid var(--gold);border-radius:10px;color:#ffe9a8;font:700 24px 'Courier Prime',monospace;letter-spacing:.2em;text-shadow:0 0 12px #ffcb52;box-shadow:0 0 0 3px #2b0b15,0 0 26px #e0b25a88;position:relative}
 .sign:before,.sign:after{content:"";position:absolute;left:10px;right:10px;height:6px;background:radial-gradient(circle,#fff3c4 2.5px,transparent 3px) 0 0/16px 6px}
@@ -131,7 +131,7 @@ input[type=file]{display:none}
 <div id="dunia"><div id="kamera"><div id="meja"></div><section id="intro"><div class="envelope-wrap"><div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Buka amplop"><div class="env-back"></div><div class="env-paper"></div><div class="env-side"></div><div class="env-side right"></div><div class="env-front"></div><div class="env-flap"></div><div class="seal">♡</div></div></div></section></div></div><div class="grain"></div>
 
 
-<section class="letter" id="letter"><div class="letter-wrap"><div class="sheet"><div class="env-open"></div><article class="letter-card" id="kartu"><div class="letter-top">A letter from the heart</div><h2 id="recipient"></h2><div class="date" id="date"></div><div class="letter-body" id="letterBody"></div><div class="signature" id="signature"></div></article></div><div class="letter-actions"><button class="action" id="nextBtn">Lihat Foto Indah →</button></div></div></section>
+<section class="letter" id="letter"><div class="letter-wrap"><div class="sheet"><div class="env-open"></div><article class="letter-card" id="kartu"><div class="letter-top">A letter from the heart</div><h2 id="recipient"></h2><div class="date" id="date"></div><div class="letter-body" id="letterBody"></div><div class="signature" id="signature"></div></article></div><div class="letter-actions"><button class="action" id="nextBtn">Lihat foto indah →</button></div></div></section>
 
 <div id="petals"></div>
 <button class="snd" id="sndBtn" aria-label="Suara">🔊</button>
